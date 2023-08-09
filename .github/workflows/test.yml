@@ -1,0 +1,42 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: lorisleiva/laravel-docker:8.2
+    
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: cafecomleite
+          POSTGRES_DB: sieven
+          POSTGRES_HOST: localhost
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.githubactions', '.env');"
+    - name: Update 
+      run: composer update
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Generate key
+      run: php artisan key:generate
+    - name: PHP Config
+      run: php artisan config:cache
+    - name: PHP migrate
+      run: php artisan migrate
+    - name: Execute tests (Unit and Feature tests)
+      run: php artisan test
