@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\TipoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 header('Access-Control-Allow-Origin: *');
 
 Route::resource('evento', EventoController::class);
+Route::get('/tipo', [TipoController::class, 'index']);
 // Route::get('/evento', [EventoController::class, 'index']);
 // Route::get('/eventos/{id}', [EventoController::class, 'show']);
 // Route::post('/eventos', [EventoController::class, 'store']);
