@@ -24,41 +24,41 @@ class EventoController extends Controller
 
         $evento->fill($request->all());
 
-        $response = $this->validate_register_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_register_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_status($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_status($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_user($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_user($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
         $evento->save();
 
@@ -138,36 +138,36 @@ class EventoController extends Controller
             return response()->json(['message' => 'Os atributos created_by_user e created_at não podem ser modificados'], 400);
         }
 
-        $response = $this->validate_register_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_register_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_user($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_user($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
         $evento->save();
 
-        $this->sendEmailOnUpdate($evento);
+        //$this->sendEmailOnUpdate($evento);
 
         return response()->json($evento);
     }

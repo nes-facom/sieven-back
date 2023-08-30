@@ -28,11 +28,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/eventos', [EventoController::class, 'index']);
-Route::get('/eventos/{id}', [EventoController::class, 'show']);
-Route::post('/eventos', [EventoController::class, 'store']);
-Route::put('/eventos/{id}', [EventoController::class, 'update']);
-Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
+// Route::get('/eventos', [EventoController::class, 'index']);
+// Route::get('/eventos/{id}', [EventoController::class, 'show']);
+// Route::post('/eventos', [EventoController::class, 'store']);
+// Route::put('/eventos/{id}', [EventoController::class, 'update']);
+// Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
 
 
 Route::get('/atividades', [AtividadeController::class, 'index']);
