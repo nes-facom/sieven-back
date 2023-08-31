@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\TipoController;
+use App\Http\Controllers\CategoriaController;
+use Database\Seeders\CategoriaSeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,8 @@ header('Access-Control-Allow-Origin: *');
 
 Route::resource('evento', EventoController::class);
 Route::get('/tipo', [TipoController::class, 'index']);
-// Route::get('/evento', [EventoController::class, 'index']);
+Route::get('/categoria', [CategoriaController::class, 'index']);
+Route::get('/evento', [EventoController::class, 'index']);
 // Route::get('/eventos/{id}', [EventoController::class, 'show']);
 // Route::post('/eventos', [EventoController::class, 'store']);
 // Route::put('/eventos/{id}', [EventoController::class, 'update']);
