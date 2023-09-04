@@ -27,6 +27,7 @@ Route::resource('evento', EventoController::class);
 Route::get('/tipo', [TipoController::class, 'index']);
 Route::get('/categoria', [CategoriaController::class, 'index']);
 Route::get('/evento', [EventoController::class, 'index']);
+Route::get('/evento/criar-evento', [EventoController::class, 'create']);
 // Route::get('/eventos/{id}', [EventoController::class, 'show']);
 // Route::post('/eventos', [EventoController::class, 'store']);
 // Route::put('/eventos/{id}', [EventoController::class, 'update']);

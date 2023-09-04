@@ -253,4 +253,57 @@ class EventoController extends Controller
 
         Mail::to($sendToEmail)->send(new notificationEmail($evento));
     }
+
+    public function create(Request $request)
+    {
+        // Validação dos dados de entrada
+        $validator = Validator::make($request->all(), [
+            'nome'              => 'required|string|max:255',
+            'descricao'         => 'required|string',
+            'local'             => 'required|string|max:255',
+            'id_categoria'      => 'required|integer',
+            'id_tipo'           => 'required|integer',
+            'data_inicial'      => 'required|date',
+            'data_final'        => 'required|date|after_or_equal:data_inicial',
+            'hora_inicial'      => 'required|date',
+            'hora_final'        => 'required|date|after_or_equal:hora_inicial',
+            'created_by_user'   => 'required|integer',
+            'situacao'          => 'required|in:Em Aprovação,Aprovado,Rejeitado',
+            'imagem'    
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Falha na validação', 'errors' => $validator->errors()], 400);
+        }
+    
+        // Criação do evento
+        $evento = new Evento;
+        $evento->fill($request->all());
+    
+        // $response = $this->validate_register_date($evento);
+        // if ($response->getStatusCode() != 200) {
+        //     return $response;
+        // }
+    
+        // $response = $this->validate_event_date($evento);
+        // if ($response->getStatusCode() != 200) {
+        //     return $response;
+        // }
+    
+        // $response = $this->validate_event_status($evento);
+        // if ($response->getStatusCode() != 200) {
+        //     return $response;
+        // }
+    
+        // $response = $this->validate_event_user($evento);
+        // if ($response->getStatusCode() != 200) {
+        //     return $response;
+        // }
+    
+        // Salva o evento
+        $evento->save();
+    
+        return response()->json(['message' => 'Evento criado com sucesso', 'evento' => $evento], 201);
+    }
+    
 }
