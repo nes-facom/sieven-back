@@ -8,6 +8,8 @@ use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class EventoController extends Controller
 {
@@ -71,6 +73,14 @@ class EventoController extends Controller
 
         return response()->json($evento);
     }
+
+    public function showAll()
+    {
+        $eventos = Evento::all();
+
+        return response()->json($eventos);
+    }
+
 
     public function showSolicited()
     {
@@ -267,38 +277,30 @@ class EventoController extends Controller
             'data_final'        => 'required|date|after_or_equal:data_inicial',
             'hora_inicial'      => 'required|date',
             'hora_final'        => 'required|date|after_or_equal:hora_inicial',
-            'created_by_user'   => 'required|integer',
+            'created_by_user'   => 'integer',
             'situacao'          => 'required|in:Em Aprovação,Aprovado,Rejeitado',
-            'imagem'    
+            'imagem'            => 'image|mimes:jpeg,png,jpg,gif',
         ]);
     
         if ($validator->fails()) {
             return response()->json(['message' => 'Falha na validação', 'errors' => $validator->errors()], 400);
         }
     
+        // Verifique se um arquivo de imagem foi enviado
+        if ($request->hasFile('imagem')) {
+            // Obtenha o arquivo da imagem do request
+            $imagem = $request->file('imagem');
+    
+            // Salve a imagem em algum local (por exemplo, na pasta de uploads)
+            $caminhoImagem = $imagem->store('uploads'); // Você pode personalizar o local de armazenamento conforme necessário
+    
+            // Defina o caminho da imagem no modelo de Evento
+            $evento->imagem = $caminhoImagem;
+        }
+    
         // Criação do evento
         $evento = new Evento;
         $evento->fill($request->all());
-    
-        // $response = $this->validate_register_date($evento);
-        // if ($response->getStatusCode() != 200) {
-        //     return $response;
-        // }
-    
-        // $response = $this->validate_event_date($evento);
-        // if ($response->getStatusCode() != 200) {
-        //     return $response;
-        // }
-    
-        // $response = $this->validate_event_status($evento);
-        // if ($response->getStatusCode() != 200) {
-        //     return $response;
-        // }
-    
-        // $response = $this->validate_event_user($evento);
-        // if ($response->getStatusCode() != 200) {
-        //     return $response;
-        // }
     
         // Salva o evento
         $evento->save();
