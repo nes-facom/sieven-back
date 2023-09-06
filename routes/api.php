@@ -22,12 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'auth', 'middleware' => 'cors'], function() {
+Route::group(['middleware' => 'cors'], function() {
     Route::resource('evento', EventoController::class);
     Route::get('/tipo', [TipoController::class, 'index']);
     Route::get('/categoria', [CategoriaController::class, 'index']);
     Route::get('/evento', [EventoController::class, 'index']);
-    //Route::post('/evento/criar-evento', [EventoController::class, 'store']);
+    Route::post('/evento/criar-evento', [EventoController::class, 'store']);
     Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
 });
