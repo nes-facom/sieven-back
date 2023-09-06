@@ -21,15 +21,26 @@ use Database\Seeders\CategoriaSeeder;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-header('Access-Control-Allow-Origin: *');
 
-Route::resource('evento', EventoController::class);
-Route::get('/tipo', [TipoController::class, 'index']);
-Route::get('/categoria', [CategoriaController::class, 'index']);
-Route::get('/evento', [EventoController::class, 'index']);
-Route::post('/evento/criar-evento', [EventoController::class, 'create']);
-Route::get('/evento/{id}', [EventoController::class, 'show']);
-Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
+Route::group(['prefix' => 'auth', 'middleware' => 'cors'], function() {
+    Route::resource('evento', EventoController::class);
+    Route::get('/tipo', [TipoController::class, 'index']);
+    Route::get('/categoria', [CategoriaController::class, 'index']);
+    Route::get('/evento', [EventoController::class, 'index']);
+    //Route::post('/evento/criar-evento', [EventoController::class, 'store']);
+    Route::get('/evento/{id}', [EventoController::class, 'show']);
+    Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
+});
+
+
+
+// Route::resource('evento', EventoController::class);
+// Route::get('/tipo', [TipoController::class, 'index']);
+// Route::get('/categoria', [CategoriaController::class, 'index']);
+// Route::get('/evento', [EventoController::class, 'index']);
+// //Route::post('/evento/criar-evento', [EventoController::class, 'store']);
+// Route::get('/evento/{id}', [EventoController::class, 'show']);
+// Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
 // Route::post('/eventos', [EventoController::class, 'store']);
 // Route::put('/eventos/{id}', [EventoController::class, 'update']);
 // Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
