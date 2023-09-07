@@ -22,6 +22,7 @@ class CreateEventoTable extends Migration
             $table->foreignId('id_tipo')->references('id')->on('tipo');
             $table->timestamp('data_inicial')->nullable();
             $table->timestamp('data_final')->nullable();
+            $table->text('imagem')->nullable();
             $table->timestamps();
             $table->integer('created_by_user');
             $table->enum('situacao', ['Em Aprovação', 'Aprovado', 'Não Aprovado', 'Cancelado', 'Concluído'])->default('Em Aprovação');
