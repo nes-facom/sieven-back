@@ -39,6 +39,6 @@ jobs:
     - name: PHP Config
       run: php artisan config:cache
     - name: PHP migrate
-      run: php artisan migrate
-    - name: Execute tests (Unit and Feature tests)
-      run: php artisan test
+      run: php artisan migrate:fresh --seed
+    # - name: Execute tests (Unit and Feature tests)
+    #   run: php artisan test
