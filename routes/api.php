@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\AdministradorController;
 use Database\Seeders\CategoriaSeeder;
 
 /*
@@ -30,6 +31,7 @@ Route::group(['middleware' => 'cors'], function() {
     Route::post('/evento/criar-evento', [EventoController::class, 'store']);
     Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
+    Route::get('/verificar-nome/{nome}', [AdministradorController::class, 'verificarNome']);
 });
 
 
