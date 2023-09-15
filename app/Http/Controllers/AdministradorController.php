@@ -88,9 +88,9 @@ class AdministradorController extends Controller
         $administrador = Administrador::where('passaporte', $nome)->first();
 
         if ($administrador) {
-            return response()->json(['mensagem' => 'Nome encontrado na tabela Administrador'], 200);
+            return response()->json(['mensagem' => 'Nome encontrado na tabela Administrador', 'status' => 200], 200);
         } else {
-            return response()->json(['mensagem' => 'Nome não encontrado na tabela Administrador'], 404);
+            return response()->json(['mensagem' => 'Nome não encontrado na tabela Administrador', 'status' => 404], 404);
         }
     }
 }
