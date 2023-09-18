@@ -30,7 +30,6 @@ Route::get('/evento', [EventoController::class, 'index']);
 Route::post('/evento/criar-evento', [EventoController::class, 'create']);
 Route::get('/evento/{id}', [EventoController::class, 'show']);
 Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
+Route::put('/evento/{id}', [EventoController::class, 'update']);
+Route::delete('/evento/{id}', [EventoController::class, 'delete']);
 // Route::post('/eventos', [EventoController::class, 'store']);
-// Route::put('/eventos/{id}', [EventoController::class, 'update']);
-// Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
-
