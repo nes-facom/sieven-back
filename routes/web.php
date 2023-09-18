@@ -24,25 +24,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-// Route::get('/eventos', [EventoController::class, 'index']);
-// Route::get('/eventos/{id}', [EventoController::class, 'show']);
-// Route::post('/eventos', [EventoController::class, 'store']);
-// Route::put('/eventos/{id}', [EventoController::class, 'update']);
-// Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
+// // Route::get('/eventos', [EventoController::class, 'index']);
+// // Route::get('/eventos/{id}', [EventoController::class, 'show']);
+// // Route::post('/eventos', [EventoController::class, 'store']);
+// // Route::put('/eventos/{id}', [EventoController::class, 'update']);
+// // Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
 
 
-Route::get('/atividades', [AtividadeController::class, 'index']);
-Route::get('/atividades/{id}', [AtividadeController::class, 'show']);
-Route::get('/atividades/evento/{eventoId}', [AtividadeController::class, 'showByEventId']);
+// Route::get('/atividades', [AtividadeController::class, 'index']);
+// Route::get('/atividades/{id}', [AtividadeController::class, 'show']);
+// Route::get('/atividades/evento/{eventoId}', [AtividadeController::class, 'showByEventId']);
 
-Route::post('/atividades', [AtividadeController::class, 'store']);
-Route::put('/atividades/{id}', [AtividadeController::class, 'update']);
-Route::delete('/atividades/{id}', [AtividadeController::class, 'destroy']);
-
-header('Access-Control-Allow-Origin: *');
-
-require __DIR__.'/auth.php';
+// Route::post('/atividades', [AtividadeController::class, 'store']);
+// Route::put('/atividades/{id}', [AtividadeController::class, 'update']);
+// Route::delete('/atividades/{id}', [AtividadeController::class, 'destroy']);
+// require __DIR__.'/auth.php';

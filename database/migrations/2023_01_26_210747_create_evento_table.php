@@ -16,12 +16,13 @@ class CreateEventoTable extends Migration
         Schema::create('evento', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('descricao')->nullable();
-            $table->string('local')->nullable();
+            $table->text('descricao')->nullable();
+            $table->text('local')->nullable();
             $table->foreignId('id_categoria')->references('id')->on('categoria');
             $table->foreignId('id_tipo')->references('id')->on('tipo');
             $table->timestamp('data_inicial')->nullable();
             $table->timestamp('data_final')->nullable();
+            $table->text('imagem')->nullable();
             $table->timestamps();
             $table->integer('created_by_user');
             $table->enum('situacao', ['Em Aprovação', 'Aprovado', 'Não Aprovado', 'Cancelado', 'Concluído'])->default('Em Aprovação');
