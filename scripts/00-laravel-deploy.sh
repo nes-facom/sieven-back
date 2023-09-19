@@ -4,7 +4,7 @@ composer install --no-dev
 composer update
 
 echo "Generating Key..."
-php artisan key:generate
+php artisan key:generate --show
 
 echo "Clearing caches..."
 php artisan optimize:clear
