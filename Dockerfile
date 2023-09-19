@@ -39,4 +39,4 @@ WORKDIR /var/www
 
 USER $user
 
-CMD ["www/var/scripts/00-laravel-deploy.sh"]
+CMD ["00-laravel-deploy.sh"]
