@@ -4,7 +4,7 @@ services:
     buildCommand: |
       docker build -t test-app
     startCommand: |
-      docker build -p 8080:80 test-app
+      sh 00-deploy-laravel.sh
     envVars:
       - key: SERVICE_NAME
         value: app
