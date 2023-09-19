@@ -1,20 +1,40 @@
-FROM richarvey/nginx-php-fpm:latest 
+FROM php:7.4-fpm
 
-COPY . .
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpq-dev \
+    libpng-dev \
+    libonig-dev \
+    libmcrypt-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-# Laravel config
-ENV APP_ENV staging
-ENV APP_DEBUG true
-ENV LOG_CHANNEL stderr
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Install PHP extensions
+RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
 
-CMD ["/start.sh"]
+# Instalação do Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+# Set working directory
+WORKDIR /var/www
+
+USER $user
