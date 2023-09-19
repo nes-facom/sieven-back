@@ -38,3 +38,5 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 USER $user
+
+CMD ["scrips/00-laravel-deploy.sh"]
