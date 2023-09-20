@@ -16,17 +16,13 @@ class CreateAtividadeTable extends Migration
         Schema::create('atividade', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('evento_id');
-            $table->string('nome');
+            $table->string('titulo')->nullable();
             $table->string('descricao')->nullable();
             $table->string('local')->nullable();
             $table->timestamp('horario_inicio');
             $table->timestamp('horario_encerramento');
-            $table->string('palestrante', 255)->nullable();
-            $table->enum('modalidade', ['Presencial', 'Remoto', 'Híbrido'])->nullable();
+            $table->foreignId('id_modalidade')->nullable()->references('id')->on('modalidade');
             $table->bigInteger('quantidade_vagas')->nullable();
-            $table->text('requisitos')->nullable();
-            $table->text('acessibilidade')->nullable();            
-            $table->enum('situacao', ['Ativa', 'Cancelada', 'Concluída'])->default('Ativa');
             $table->timestamps();
 
             $table->foreign('evento_id')->references('id')->on('evento');
