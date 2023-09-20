@@ -23,7 +23,7 @@ class VwEventoAtividade extends Migration
             e.descricao AS descricao_evento,
             e.local AS local_evento,
             a.id AS atividade_id,
-            a.titulo AS titulo_atividade,
+            a.nome AS titulo_atividade,
             a.local AS local_atividade,
             m.id AS modalidade_id,
             m.nome_modalidade AS nome_modalidade,
