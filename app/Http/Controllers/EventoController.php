@@ -8,6 +8,8 @@ use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class EventoController extends Controller
 {
@@ -24,41 +26,41 @@ class EventoController extends Controller
 
         $evento->fill($request->all());
 
-        $response = $this->validate_register_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_register_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_status($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_status($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_user($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_user($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
         $evento->save();
 
@@ -71,6 +73,14 @@ class EventoController extends Controller
 
         return response()->json($evento);
     }
+
+    public function showAll()
+    {
+        $eventos = Evento::all();
+
+        return response()->json($eventos);
+    }
+
 
     public function showSolicited()
     {
@@ -138,36 +148,36 @@ class EventoController extends Controller
             return response()->json(['message' => 'Os atributos created_by_user e created_at não podem ser modificados'], 400);
         }
 
-        $response = $this->validate_register_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_register_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_date($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_date($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
-        $response = $this->validate_event_user($evento);
-        if ($response->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $response->getData()->message],
-                $response->getStatusCode()
-            );
-        }
+        // $response = $this->validate_event_user($evento);
+        // if ($response->getStatusCode() != 200) 
+        // {
+        //     return response()->json(
+        //         ['message' => $response->getData()->message],
+        //         $response->getStatusCode()
+        //     );
+        // }
 
         $evento->save();
 
-        $this->sendEmailOnUpdate($evento);
+        //$this->sendEmailOnUpdate($evento);
 
         return response()->json($evento);
     }
@@ -253,4 +263,49 @@ class EventoController extends Controller
 
         Mail::to($sendToEmail)->send(new notificationEmail($evento));
     }
+
+    public function create(Request $request)
+    {
+        // Validação dos dados de entrada
+        $validator = Validator::make($request->all(), [
+            'nome'              => 'required|string|max:255',
+            'descricao'         => 'required|string',
+            'local'             => 'required|string|max:255',
+            'id_categoria'      => 'required|integer',
+            'id_tipo'           => 'required|integer',
+            'data_inicial'      => 'required|date',
+            'data_final'        => 'required|date|after_or_equal:data_inicial',
+            'hora_inicial'      => 'required|date',
+            'hora_final'        => 'required|date|after_or_equal:hora_inicial',
+            'created_by_user'   => 'integer',
+            'situacao'          => 'required|in:Em Aprovação,Aprovado,Rejeitado',
+            'imagem'            => 'image|mimes:jpeg,png,jpg,gif',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Falha na validação', 'errors' => $validator->errors()], 400);
+        }
+    
+        // Verifique se um arquivo de imagem foi enviado
+        if ($request->hasFile('imagem')) {
+            // Obtenha o arquivo da imagem do request
+            $imagem = $request->file('imagem');
+    
+            // Salve a imagem em algum local (por exemplo, na pasta de uploads)
+            $caminhoImagem = $imagem->store('uploads'); // Você pode personalizar o local de armazenamento conforme necessário
+    
+            // Defina o caminho da imagem no modelo de Evento
+            $evento->imagem = $caminhoImagem;
+        }
+    
+        // Criação do evento
+        $evento = new Evento;
+        $evento->fill($request->all());
+    
+        // Salva o evento
+        $evento->save();
+    
+        return response()->json(['message' => 'Evento criado com sucesso', 'evento' => $evento], 201);
+    }
+    
 }

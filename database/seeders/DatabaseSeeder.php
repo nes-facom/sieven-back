@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $path = 'database/scripts/scripts.sql';
-        DB::unprepared(File::get($path));
+        $this->call(CategoriaSeeder::class);
+        $this->call(TipoSeeder::class);
+        $this->call(ModalidadeSeeder::class);
+        $this->call(UsuarioSeeder::class);
+        $this->call(AdministradorSeeder::class);
     }
 }
 

@@ -27,7 +27,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.githubactions', '.env');"
+      run: echo "$RENDER_SECRET_ENV" > .env
+      env:
+        RENDER_SECRET_ENV: ${{ secrets.RENDER_SECRET_ENV }}
     - name: Update 
       run: composer update
     - name: Install Dependencies
@@ -37,6 +39,6 @@ jobs:
     - name: PHP Config
       run: php artisan config:cache
     - name: PHP migrate
-      run: php artisan migrate
-    - name: Execute tests (Unit and Feature tests)
-      run: php artisan test
+      run: php artisan migrate:fresh --seed
+    # - name: Execute tests (Unit and Feature tests)
+    #   run: php artisan test

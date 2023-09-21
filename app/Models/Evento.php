@@ -15,11 +15,15 @@ class Evento extends Model
         'nome',
         'descricao',
         'local',
-        'modalidade',
+        'id_categoria',
+        'id_tipo',
         'data_inicial',
         'data_final',
+        'hora_inicial',
+        'hora_final',
         'created_by_user',
         'situacao',
+        'imagem',
         'created_at',
         'updated_at'
     ];
