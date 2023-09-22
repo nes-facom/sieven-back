@@ -31,5 +31,5 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
     Route::put('/evento/{id}', [EventoController::class, 'update']);
-    Route::delete('/evento/{id}', [EventoController::class, 'delete']);
+    Route::delete('/evento/{id}', [EventoController::class, 'destroy']);
 });
