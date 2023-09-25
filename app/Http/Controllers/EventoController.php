@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Mail\notificationEmail;
 use App\Models\Evento;
 use App\Models\User;
@@ -69,10 +70,16 @@ class EventoController extends Controller
 
     public function show($id)
     {
-        $evento = Evento::find($id);
-
+        $evento = DB::table('evento')
+            ->join('categoria', 'evento.id_categoria', '=', 'categoria.id')
+            ->join('tipo', 'evento.id_tipo', '=', 'tipo.id')
+            ->select('evento.*', 'categoria.nome_categoria', 'tipo.nome_tipo')
+            ->where('evento.id', $id)
+            ->first();
+    
         return response()->json($evento);
     }
+        
 
     public function showAll()
     {
