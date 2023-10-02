@@ -31,19 +31,7 @@ Route::group(['middleware' => 'cors'], function() {
     Route::post('/evento/criar-evento', [EventoController::class, 'store']);
     Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
+    Route::put('/evento/{id}', [EventoController::class, 'update']);
+    Route::delete('/evento/{id}', [EventoController::class, 'destroy']);
     Route::get('/verificar-nome/{nome}', [AdministradorController::class, 'verificarNome']);
 });
-
-
-
-// Route::resource('evento', EventoController::class);
-// Route::get('/tipo', [TipoController::class, 'index']);
-// Route::get('/categoria', [CategoriaController::class, 'index']);
-// Route::get('/evento', [EventoController::class, 'index']);
-// //Route::post('/evento/criar-evento', [EventoController::class, 'store']);
-// Route::get('/evento/{id}', [EventoController::class, 'show']);
-// Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
-// Route::post('/eventos', [EventoController::class, 'store']);
-// Route::put('/eventos/{id}', [EventoController::class, 'update']);
-// Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
-
