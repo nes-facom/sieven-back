@@ -152,7 +152,7 @@ class EventoController extends Controller
     }
 
 
-    public function delete($id)
+    public function destroy($id)
     {
         $evento = Evento::findOrFail($id);
     

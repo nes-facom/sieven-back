@@ -33,13 +33,15 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
     Route::put('/evento/{id}', [EventoController::class, 'update']);
-    Route::delete('/evento/{id}', [EventoController::class, 'delete']);
+    Route::delete('/evento/{id}', [EventoController::class, 'destroy']);
 
     //Rotas de atividade
     Route::get('/atividade', [AtividadeController::class, 'index']);
     Route::post('/atividade/criar-atividade', [AtividadeController::class, 'store']);
     Route::put('/atividade/{id}', [AtividadeController::class, 'update']);
-    Route::delete('/atividade/{id}', [AtividadeController::class, 'delete']);
-    Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    Route::delete('/atividade/{id}', [AtividadeController::class, 'destroy']);
+    //Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    Route::get('/atividade/{id}', [AtividadeController::class, 'showByEventId']);
+
 
 });
