@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Running composer"
-composer install --no-dev --working-dir=/var/www/html
+composer install --no-interaction --no-progress --optimize-autoloader
 composer update
 
 echo "Generating Key..."

@@ -1,0 +1,14 @@
+FROM php:8.2-apache
+
+RUN apt-get update -y && apt-get install -y libpq-dev git
+    
+RUN docker-php-ext-install pdo pdo_pgsql
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /var/www/html
+
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache 
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+CMD php artisan serve --port 80 --host 0.0.0.0
