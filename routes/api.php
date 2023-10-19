@@ -6,7 +6,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\AdministradorController;
-use Database\Seeders\CategoriaSeeder;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,19 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('/verificar-nome/{nome}', [AdministradorController::class, 'verificarNome']);
 });
 
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'App\Http\Controllers\AuthController@login')->name('login');
+    Route::post('logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
+    Route::post('refresh', 'App\Http\Controllers\AuthController@refresh')->name('refresh');
+    Route::post('me', 'App\Http\Controllers\AuthController@me')->name('me');
+
+});
 
 
 // Route::resource('evento', EventoController::class);

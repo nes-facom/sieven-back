@@ -14,19 +14,26 @@ class UsuarioSeeder extends Seeder
     {
         
         $user = [
-            'name' => 'sieven', 
-            'email' => 'admin@admin', 
-            'email_verified_at' => NULL, 
-            'password' => '$2y$10$Wj.rMPlJ8zdu6OChS1nasexv/RRl/zyre7toxOXyLV.Ry/DbxEtii', 
-            'remember_token' => NULL, 
-            'created_at' => '2023-05-08 18:51:34', 
-            'updated_at' => '2023-05-08 18:51:34', 
-            'cpf' => NULL, 
-            'data_nascimento' => NULL, 
-            'foto_perfil' => NULL, 
-            'membro_ufms' => TRUE, 
-            'administrador' => TRUE, 
-            'situacao_id' => 1
+            [
+                'nome' => 'Administrator',
+                'password' => bcrypt('admin'),
+                'email' => 'admin@mail.com'
+            ],
+            [
+                'nome' => 'Arminda',
+                'password' => bcrypt('arminda'),
+                'email' => 'arminda.del@ufms.br'
+            ],
+            [
+                'nome' => 'Margarete',
+                'password' => bcrypt('margarete'),
+                'email' => 'margarete.knoch@gmail.com'
+            ],
+            [
+                'nome' => 'Zuleide',
+                'password' => bcrypt('zuleide'),
+                'email' => 'zuleidedurey@gmail.com'
+            ]
         ];
 
 
