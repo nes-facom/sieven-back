@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Inscricao extends Model
 {
@@ -16,6 +17,7 @@ class Inscricao extends Model
         'nome',
         'cpf',
         'email',
+        'telefone',
         'checkin'
     ];
 

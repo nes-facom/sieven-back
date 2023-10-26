@@ -21,6 +21,7 @@ class CreateInscricaosTable extends Migration
             $table->string('nome');
             $table->string('cpf');
             $table->string('email')->unique();
+            $table->string('telefone');
             $table->boolean('checkin');
             $table->timestamps();
 

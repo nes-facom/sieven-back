@@ -76,8 +76,9 @@ class EventoController extends Controller
             ->select('evento.*', 'categoria.nome_categoria', 'tipo.nome_tipo')
             ->where('evento.id', $id)
             ->first();
-    
+
         return response()->json($evento);
+        
     }
         
 

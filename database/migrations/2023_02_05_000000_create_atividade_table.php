@@ -21,15 +21,12 @@ class CreateAtividadeTable extends Migration
             $table->string('local')->nullable();
             $table->timestamp('horario_inicio');
             $table->timestamp('horario_encerramento');
-            $table->string('palestrante', 255)->nullable();
-            $table->enum('modalidade', ['Presencial', 'Remoto', 'Híbrido'])->nullable();
             $table->bigInteger('quantidade_vagas')->nullable();
-            $table->text('requisitos')->nullable();
-            $table->text('acessibilidade')->nullable();            
-            $table->enum('situacao', ['Ativa', 'Cancelada', 'Concluída'])->default('Ativa');
+            $table->foreignId('id_modalidade')->references('id')->on('modalidade');
             $table->timestamps();
 
             $table->foreign('evento_id')->references('id')->on('evento');
+            
         });
     }
 
