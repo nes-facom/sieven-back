@@ -16,6 +16,8 @@ class Atividade extends Model
         'nome',
         'descricao',
         'local',
+        'id_categoria',
+        'id_tipo',
         'id_modalidade',
         'quantidade_vagas',
         'horario_inicio',

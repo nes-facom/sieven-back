@@ -18,8 +18,6 @@ class CreateEventoTable extends Migration
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->text('local')->nullable();
-            $table->foreignId('id_categoria')->references('id')->on('categoria');
-            $table->foreignId('id_tipo')->references('id')->on('tipo');
             $table->timestamp('data_inicial')->nullable();
             $table->timestamp('data_final')->nullable();
             $table->text('imagem')->nullable();
