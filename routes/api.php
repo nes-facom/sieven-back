@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\AdministradorController;
@@ -24,14 +25,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'cors'], function() {
+    //Rotas de Evento
     Route::resource('evento', EventoController::class);
     Route::get('/tipo', [TipoController::class, 'index']);
     Route::get('/categoria', [CategoriaController::class, 'index']);
     Route::get('/evento', [EventoController::class, 'index']);
-    Route::post('/evento/criar-evento', [EventoController::class, 'store']);
-    Route::get('/evento/{id}', [EventoController::class, 'show']);
     Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
-    Route::get('/verificar-nome/{nome}', [AdministradorController::class, 'verificarNome']);
+    Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    Route::get('/atividade', [AtividadeController::class, 'index']);
+    
 });
 
 Route::group([
@@ -40,23 +42,29 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-
     Route::post('login', 'App\Http\Controllers\AuthController@login')->name('login');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh')->name('refresh');
     Route::post('me', 'App\Http\Controllers\AuthController@me')->name('me');
-
 });
 
+Route::middleware(['jwt.auth'])->group(function () {
 
-// Route::resource('evento', EventoController::class);
-// Route::get('/tipo', [TipoController::class, 'index']);
-// Route::get('/categoria', [CategoriaController::class, 'index']);
-// Route::get('/evento', [EventoController::class, 'index']);
-// //Route::post('/evento/criar-evento', [EventoController::class, 'store']);
-// Route::get('/evento/{id}', [EventoController::class, 'show']);
-// Route::get('/eventos/exibir-eventos', [EventoController::class, 'showAll']);
-// Route::post('/eventos', [EventoController::class, 'store']);
-// Route::put('/eventos/{id}', [EventoController::class, 'update']);
-// Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
+    //Rotas de evento
+    Route::put('/evento/{id}', [EventoController::class, 'update']);
+    Route::delete('/evento/{id}', [EventoController::class, 'destroy']);
+    Route::post('/evento/criar-evento', [EventoController::class, 'store']);
+    Route::get('/evento/{id}', [EventoController::class, 'show']);
+
+    //Rotas de atividade
+    // Route::get('/atividade', [AtividadeController::class, 'index']);
+    Route::post('/atividade/criar-atividade', [AtividadeController::class, 'store']);
+    Route::put('/atividade/{id}', [AtividadeController::class, 'update']);
+    Route::delete('/atividade/{id}', [AtividadeController::class, 'destroy']);
+    //Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    // Route::get('/atividade/{id}', [AtividadeController::class, 'showByEventId']);
+
+});
+    
+
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Mail\notificationEmail;
 use App\Models\Evento;
 use App\Models\User;
@@ -69,9 +70,12 @@ class EventoController extends Controller
 
     public function show($id)
     {
-        $evento = Evento::find($id);
+        $evento = DB::table('evento')
+            ->where('evento.id', $id)
+            ->first();
 
         return response()->json($evento);
+        
     }
 
     public function showAll()
@@ -140,56 +144,26 @@ class EventoController extends Controller
 
         $evento = Evento::findOrFail($id);
 
-        $evento->fill($request->all());
-
         $disallowedAttributesPresent = array_intersect(array_keys($request->all()), $disallowedAttributes);
         if (!empty($disallowedAttributesPresent)) 
         {
             return response()->json(['message' => 'Os atributos created_by_user e created_at não podem ser modificados'], 400);
         }
 
-        // $response = $this->validate_register_date($evento);
-        // if ($response->getStatusCode() != 200) 
-        // {
-        //     return response()->json(
-        //         ['message' => $response->getData()->message],
-        //         $response->getStatusCode()
-        //     );
-        // }
-
-        // $response = $this->validate_event_date($evento);
-        // if ($response->getStatusCode() != 200) 
-        // {
-        //     return response()->json(
-        //         ['message' => $response->getData()->message],
-        //         $response->getStatusCode()
-        //     );
-        // }
-
-        // $response = $this->validate_event_user($evento);
-        // if ($response->getStatusCode() != 200) 
-        // {
-        //     return response()->json(
-        //         ['message' => $response->getData()->message],
-        //         $response->getStatusCode()
-        //     );
-        // }
-
-        $evento->save();
-
-        //$this->sendEmailOnUpdate($evento);
+        $evento->update($request->all());
 
         return response()->json($evento);
     }
 
+
     public function destroy($id)
     {
         $evento = Evento::findOrFail($id);
-
+    
         $evento->delete();
-
+    
         return response()->json(['message' => 'Evento removido com sucesso']);
-    }
+    }    
 
     public function validate_register_date(Evento $evento)
     {
