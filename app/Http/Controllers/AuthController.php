@@ -29,6 +29,10 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        $user = auth()->user();
+        //Adiciona a informação de usuário administrador no token jwt
+        $customClaims = ['is_admin' => true, 'nome' => $user->nome];
+        $token = auth()->claims($customClaims)->attempt($credentials);
 
         return $this->respondWithToken($token);
     }
