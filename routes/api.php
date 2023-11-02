@@ -39,6 +39,9 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('/evento/{id}/detalhes', [AtividadeController::class, 'showbyEventId']);
     //Mostra uma atividade
     Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    //Popula Pagina inicial
+    Route::get('/eventos-pagina-inicial', [EventoController::class, 'eventosPaginaInicial']);
+    //Popula 
 });
 
 //Rotas para manipulação do token e login "/api/auth"
