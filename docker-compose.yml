@@ -95,7 +95,7 @@ services:
         ports:
             - ${DB_PORT:-5432}:5432
         volumes:
-            - dbpgsql:/docker-entrypoint-initdb.d/
+            - database-data:/docker-entrypoint-initdb.d/
         environment:
             POSTGRES_USER: ${DB_USERNAME:-postgres}
             POSTGRES_PASSWORD: ${DB_PASSWORD:-cafecomleite}
