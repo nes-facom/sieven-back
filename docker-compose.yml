@@ -3,8 +3,7 @@ version: "3.8"
 services:
     # BACKEND
     backend-webserver:
-        build:
-            context: ./docker-compose/nginx
+        image: nginx:alpine
         container_name: backend-webserver
         restart: unless-stopped
         ports:
@@ -46,7 +45,7 @@ services:
             dockerfile: php.dockerfile
         container_name: php
         volumes:
-            - ./web-backend:/var/www
+            - ./:/var/www
             - ./docker-compose/php/php.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - test-network
@@ -57,7 +56,7 @@ services:
             dockerfile: composer.dockerfile
         container_name: composer
         volumes:
-            - ./web-backend:/var/www
+            - ./:/var/www
         depends_on:
             - php
         profiles: ["composer"]
@@ -71,7 +70,7 @@ services:
             dockerfile: php.dockerfile
         container_name: laravel-migrate-seed
         volumes:
-            - ./web-backend:/var/www
+            - ./:/var/www
         depends_on:
             - database
         profiles: ["migrate-seed"]
