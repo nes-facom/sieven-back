@@ -4,7 +4,7 @@ services:
     # BACKEND
     backend-webserver:
         build:
-            context: docker-compose/nginx
+            context: ./docker-compose/nginx
             dockerfile: nginx.dockerfile
         container_name: backend-webserver
         restart: unless-stopped
@@ -14,7 +14,7 @@ services:
         volumes:
             - ./web-backend:/var/www
             - ./web-backend/.env:/var/www/.env
-            - docker-compose/nginx:/etc/nginx/conf.d
+            - ./docker-compose/nginx:/etc/nginx/conf.d
         depends_on:
             - php
             - database
@@ -44,18 +44,18 @@ services:
 
     php:
         build:
-            context: docker-compose/php
+            context: ./docker-compose/php
             dockerfile: php.dockerfile
         container_name: php
         volumes:
             - ./web-backend:/var/www
-            - docker-compose/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+            - ./docker-compose/php/php.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - test-network
 
     composer:
         build:
-            context: docker-compose/composer
+            context: ./docker-compose/composer
             dockerfile: composer.dockerfile
         container_name: composer
         volumes:
@@ -69,7 +69,7 @@ services:
 
     laravel-migrate-seed:
         build:
-            context: docker-compose/php
+            context: ./docker-compose/php
             dockerfile: php.dockerfile
         container_name: laravel-migrate-seed
         volumes:
