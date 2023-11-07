@@ -31,6 +31,7 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('/tipo', [TipoController::class, 'index']);
     //Mostar todas as categorias
     Route::get('/categoria', [CategoriaController::class, 'index']);
+    Route::get('/modalidade', [ModalidadeController::class, 'index']);
     //Mostra todos os eventos
     Route::get('/evento', [EventoController::class, 'index']);
     //Mostra um evento
