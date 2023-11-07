@@ -77,6 +77,7 @@ class EventoController extends Controller
         return response()->json($evento);
         
     }
+        
 
     public function showAll()
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\AdministradorController;
 use Database\Seeders\CategoriaSeeder;
 
 /*
