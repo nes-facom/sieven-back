@@ -27,7 +27,7 @@ class CreateAtividadeTable extends Migration
             $table->foreignId('id_modalidade')->references('id')->on('modalidade');
             $table->timestamps();
 
-            $table->foreign('evento_id')->references('id')->on('evento');
+            $table->foreign('evento_id')->references('id')->on('evento')->onDelete('cascade');
             
         });
     }

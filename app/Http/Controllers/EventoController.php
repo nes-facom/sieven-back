@@ -283,4 +283,19 @@ class EventoController extends Controller
         return response()->json(['message' => 'Evento criado com sucesso', 'evento' => $evento], 201);
     }
     
+    public function eventosPaginaInicial() {
+        // Obter os 12 primeiros eventos cadastrados
+        $eventos = Evento::orderBy('created_at', 'desc')->take(12)->get();
+
+        // Dividir os eventos em dois arrays
+        $eventosDestaque = $eventos->take(4);
+        $maisEventos = $eventos->slice(4);
+
+        // Retornar os dados no formato desejado (por exemplo, em JSON)
+        return response()->json([
+            'eventosDestaque' => $eventosDestaque,
+            'maisEventos' => $maisEventos,
+        ]);
+    }
+    
 }
