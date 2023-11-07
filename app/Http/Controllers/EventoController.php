@@ -71,13 +71,11 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = DB::table('evento')
-            ->join('categoria', 'evento.id_categoria', '=', 'categoria.id')
-            ->join('tipo', 'evento.id_tipo', '=', 'tipo.id')
-            ->select('evento.*', 'categoria.nome_categoria', 'tipo.nome_tipo')
             ->where('evento.id', $id)
             ->first();
-    
+
         return response()->json($evento);
+        
     }
         
 
