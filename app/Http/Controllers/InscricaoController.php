@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Inscricao;
 use App\Models\Atividade;
+use App\Mail\InscricaoCriada;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
+
+
 
 class InscricaoController extends Controller
 {
@@ -39,6 +45,8 @@ class InscricaoController extends Controller
         // }
 
         $inscricao = Inscricao::create($dados);
+
+        Mail::to('brunnofern@gmail.com')->send(new InscricaoCriada());
 
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
 
