@@ -19,13 +19,15 @@ class CreateAtividadeTable extends Migration
             $table->string('nome');
             $table->string('descricao')->nullable();
             $table->string('local')->nullable();
+            $table->foreignId('id_categoria')->references('id')->on('categoria');
+            $table->foreignId('id_tipo')->references('id')->on('tipo');
             $table->timestamp('horario_inicio');
             $table->timestamp('horario_encerramento');
             $table->bigInteger('quantidade_vagas')->nullable();
             $table->foreignId('id_modalidade')->references('id')->on('modalidade');
             $table->timestamps();
 
-            $table->foreign('evento_id')->references('id')->on('evento');
+            $table->foreign('evento_id')->references('id')->on('evento')->onDelete('cascade');
             
         });
     }

@@ -71,9 +71,6 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = DB::table('evento')
-            ->join('categoria', 'evento.id_categoria', '=', 'categoria.id')
-            ->join('tipo', 'evento.id_tipo', '=', 'tipo.id')
-            ->select('evento.*', 'categoria.nome_categoria', 'tipo.nome_tipo')
             ->where('evento.id', $id)
             ->first();
 
@@ -284,6 +281,21 @@ class EventoController extends Controller
         $evento->save();
     
         return response()->json(['message' => 'Evento criado com sucesso', 'evento' => $evento], 201);
+    }
+    
+    public function eventosPaginaInicial() {
+        // Obter os 12 primeiros eventos cadastrados
+        $eventos = Evento::orderBy('created_at', 'desc')->take(12)->get();
+
+        // Dividir os eventos em dois arrays
+        $eventosDestaque = $eventos->take(4);
+        $maisEventos = $eventos->slice(4);
+
+        // Retornar os dados no formato desejado (por exemplo, em JSON)
+        return response()->json([
+            'eventosDestaque' => $eventosDestaque,
+            'maisEventos' => $maisEventos,
+        ]);
     }
     
 }
