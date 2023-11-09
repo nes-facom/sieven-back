@@ -16,17 +16,15 @@ class CreateInscricaosTable extends Migration
         Schema::create('inscricaos', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->integer('user_id');
             $table->integer('atividade_id');
             $table->string('nome');
-            $table->string('cpf');
+            $table->string('cpf')->unique();
             $table->string('email')->unique();
             $table->string('telefone');
             $table->boolean('checkin');
             $table->timestamps();
 
             $table->foreign('atividade_id')->references('id')->on('atividade');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
