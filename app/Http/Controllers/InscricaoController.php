@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Http\Request;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\Image\RendererInterface;
+use BaconQrCode\Writer;
 
 
 
@@ -46,7 +51,10 @@ class InscricaoController extends Controller
 
         $inscricao = Inscricao::create($dados);
 
-        Mail::to('brunnofern@gmail.com')->send(new InscricaoCriada());
+        $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
+
+        Mail::to($inscricao->email)->
+            send(new InscricaoCriada($inscricao, $qrCode));
 
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
 

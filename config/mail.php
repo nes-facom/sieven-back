@@ -51,6 +51,7 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'name' => env('MAIL_FROM_NAME', 'SIEVEN UFMS'),
         ],
 
         'postmark' => [
