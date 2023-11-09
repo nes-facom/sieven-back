@@ -4,6 +4,8 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use App\Models\Inscricao;
+use App\Models\Evento;
+use App\Models\Atividade;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -20,7 +22,9 @@ class InscricaoCriada extends Mailable
      */
     public function __construct(
         public Inscricao $inscricao,
-        public String $image
+        public String $image,
+        public Evento $evento,
+        public Atividade $atividade
     ) {}
 
     /**

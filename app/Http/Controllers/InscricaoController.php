@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inscricao;
 use App\Models\Atividade;
+use App\Models\Evento;
 use App\Mail\InscricaoCriada;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
@@ -42,15 +43,20 @@ class InscricaoController extends Controller
         if ($numeroInscricoesAtuais >= $numeroMaximoInscricoes) {
             return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade'], 400);
         }
-        
+
+        //PUXA TODOS OS DADOS DA INSCRIÇÃO
         $inscricao = Inscricao::create($dados);
-        //GERA O QR BASEADO NUMA URL QUE CONTÉM O UUID DA INSCRIÇÃO
+        $evento = Evento::find($atividade['evento_id']);
+
+        //GERA O QR CODE BASEADO NUMA URL QUE CONTÉM O UUID DA INSCRIÇÃO
         $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
         $qrCodeValue = (new QRCode)->render($qrCode);
+
         //ENVIA A IMAGEM PARA O CLOUDNARY
         $imageLink = (new UploadApi())->upload($qrCodeValue)->getArrayCopy();
-        Mail::to($inscricao->email)->
-            send(new InscricaoCriada($inscricao, $imageLink['secure_url']));
+
+        //ENVIA O EMAIL
+        Mail::to($inscricao->email)->send(new InscricaoCriada($inscricao, $imageLink['secure_url'], $evento, $atividade));
 
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
     }
