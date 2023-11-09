@@ -4,36 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmação de Inscrição</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center;">
-        <h1>Sua inscrição foi confirmada!</h1>
-        <p>
-            <strong>Evento:</strong> {{ $inscricao->nome }}<br>
-            <strong>Data:</strong> {{ $inscricao->nome }}<br>
-            <strong>Horário:</strong> {{ $inscricao->nome }}<br>
-            <strong>Local:</strong> {{ $inscricao->nome }} | {{ $inscricao->nome }}
-        </p>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h1>Sua inscrição foi confirmada!</h1>
+        </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <img src="{{ asset('caminho/para/sua/logo.png') }}" alt="Logo do Sistema" style="width: 100px; height: 100px;">
+        <div class="content">
+            <p>
+                <strong>Evento:</strong> {{ $inscricao->nome }}
+            </p>
+            <p>
+                <strong>Data:</strong> {{ $inscricao->data }}
+            </p>
+            <p>
+                <strong>Horário:</strong> {{ $inscricao->horario }}
+            </p>
+            <p>
+                <strong>Local:</strong> {{ $inscricao->local }} | {{ $inscricao->local2 }}
+            </p>
 
-        <h2>Seu ingresso!</h2>
+            <img src=" {{ asset('caminho/para/sua/logo.png') }}" alt="Logo do Sistema" class="logo">
 
-        <hr>
-
-        <p>
-            <strong>Participante:</strong> {{ $inscricao->nome }}<br>
-            <strong>Atividade:</strong> {{ $inscricao->nome }}<br>
-            <strong><img src="{{ asset('caminho/para/icon/calendario.png') }}" alt="Ícone de Calendário"> Data:</strong> {{ $inscricao->nome }}  {{ $inscricao->nome }} - {{ $inscricao->nome }}<br>
-            <strong>Local:</strong> {{ $inscricao->nome }} | {{ $inscricao->nome }}
-            <img src="{!!$message->embedData(QrCode::format('png')->generate('$qrCode'), 'QrCode.png', 'image/png')!!}">
-        </p>
-        
-        <hr>
-        
-        <!-- Adicione mais elementos conforme necessário -->
+            <p>
+                <strong>Participante:</strong> {{ $inscricao->nome }}
+            </p>
+            <p>
+                <strong>Atividade:</strong> {{ $inscricao->atividade }}
+            </p>
+            <p>
+                <strong><img src="{{ asset('caminho/para/icon/calendario.png') }}" alt="Ícone de Calendário"> Data:</strong> {{ $inscricao->data }}  {{ $inscricao->horario }} - {{ $inscricao->horario2 }}
+            </p>
+            <p>
+                <strong>Local:</strong> {{ $inscricao->local }} | {{ $inscricao->local2 }}
+            </p>
+            <img src=" {{ $image }}" alt="QR Code" class="qr-code">
+        </div>
     </div>
 </body>
 </html>

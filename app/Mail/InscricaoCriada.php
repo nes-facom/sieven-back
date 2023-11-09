@@ -20,7 +20,7 @@ class InscricaoCriada extends Mailable
      */
     public function __construct(
         public Inscricao $inscricao,
-        public String $qrCode
+        public String $image
     ) {}
 
     /**

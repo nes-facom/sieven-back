@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Http\Request;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-use BaconQrCode\Renderer\Image\RendererInterface;
-use BaconQrCode\Writer;
+use chillerlan\Authenticator\{Authenticator, AuthenticatorOptionsTrait};
+use chillerlan\Authenticator\Authenticators\AuthenticatorInterface;
+use chillerlan\Settings\SettingsContainerAbstract;
+use chillerlan\QRCode\{QRCode, QROptionsTrait};
+use chillerlan\QRCode\Data\QRMatrix;
+use Illuminate\Support\Facades\Storage;
+use Cloudinary\Api\Upload\UploadApi;
 
 
 
@@ -32,33 +34,25 @@ class InscricaoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-
         $atividade = Atividade::find($dados['atividade_id']);
         $numeroMaximoInscricoes = $atividade->quantidade_vagas;
-
         $numeroInscricoesAtuais = Inscricao::where('atividade_id', $dados['atividade_id'])->count();
 
+        //VALIDA SE AINDA EXISTEM VAGAS DISPONÍVEIS PARA A ATIVIDADE
         if ($numeroInscricoesAtuais >= $numeroMaximoInscricoes) {
             return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade'], 400);
         }
-
-        //Ainda não sei se isso aqui em baixo funciona
-        // $horarioInicioAtividade = $atividade->horario_inicio;
-
-        // if (Carbon::now()->greaterThan(Carbon::parse($horarioInicioAtividade))) {
-        //     return response()->json(['mensagem' => 'A atividade já começou, não é possível se inscrever.'], 400);
-        // }
-
+        
         $inscricao = Inscricao::create($dados);
-
+        //GERA O QR BASEADO NUMA URL QUE CONTÉM O UUID DA INSCRIÇÃO
         $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
-
+        $qrCodeValue = (new QRCode)->render($qrCode);
+        //ENVIA A IMAGEM PARA O CLOUDNARY
+        $imageLink = (new UploadApi())->upload($qrCodeValue)->getArrayCopy();
         Mail::to($inscricao->email)->
-            send(new InscricaoCriada($inscricao, $qrCode));
+            send(new InscricaoCriada($inscricao, $imageLink['secure_url']));
 
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
-
-
     }
 
     public function show($id)
