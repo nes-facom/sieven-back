@@ -37,25 +37,34 @@ class InscricaoController extends Controller
         $dados = $request->all();
         $atividade = Atividade::find($dados['atividade_id']);
         $numeroMaximoInscricoes = $atividade->quantidade_vagas;
+
+        //Consulta o banco para saber o número de inscrições
         $numeroInscricoesAtuais = Inscricao::where('atividade_id', $dados['atividade_id'])->count();
 
-        //VALIDA SE AINDA EXISTEM VAGAS DISPONÍVEIS PARA A ATIVIDADE
+        //Consulta o banco para saber se já existe outra inscrição com o mesmo CPF
+        $inscricaoExistente = Inscricao::where('atividade_id', $dados['atividade_id'])
+            ->where('cpf', $dados['cpf'])
+            ->first();
+
+        //Faz a validação das consultas acima
         if ($numeroInscricoesAtuais >= $numeroMaximoInscricoes) {
             return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade'], 400);
+        } else if ($inscricaoExistente) {
+            return response()->json(['mensagem' => 'Já existe uma inscrição para esta atividade com o mesmo CPF'], 401);
         }
 
-        //PUXA TODOS OS DADOS DA INSCRIÇÃO
+        //Cria a inscrição no banco
         $inscricao = Inscricao::create($dados);
         $evento = Evento::find($atividade['evento_id']);
 
-        //GERA O QR CODE BASEADO NUMA URL QUE CONTÉM O UUID DA INSCRIÇÃO
+        //Gera o QR Code baseado em uma URL que contém o uuid da inscrição
         $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
         $qrCodeValue = (new QRCode)->render($qrCode);
 
-        //ENVIA A IMAGEM PARA O CLOUDNARY
+        //Envia a mensagem para o Cloudnary
         $imageLink = (new UploadApi())->upload($qrCodeValue)->getArrayCopy();
 
-        //ENVIA O EMAIL
+        //Envia o e-mail
         Mail::to($inscricao->email)->send(new InscricaoCriada($inscricao, $imageLink['secure_url'], $evento, $atividade));
 
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);

@@ -18,7 +18,7 @@ class CreateInscricaosTable extends Migration
             $table->uuid('uuid')->unique();
             $table->integer('atividade_id');
             $table->string('nome');
-            $table->string('cpf')->unique();
+            $table->string('cpf');
             $table->string('email');
             $table->string('telefone');
             $table->boolean('checkin');
