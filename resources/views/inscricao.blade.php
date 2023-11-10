@@ -3,103 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmação de Inscrição</title>
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="display-4 text-center text-primary">
-                <i class="bi bi-check-circle"></i>
-                Sua inscrição foi confirmada!
-            </h1>
-        </div>
-
-        <div class="content">
-            <p class="lead text-center text-success">
-                <strong>Evento:</strong> {{ $evento->nome }} - {{ $atividade->nome }}
-            </p>
-            <p class="lead text-center text-success">
-                <strong>Data:</strong> {{ $atividade->horario_inicio }}
-            </p>
-            <p class="lead text-center text-success">
-                <strong>Horário:</strong> {{ $atividade->horario_inicio }}h
-            </p>
-            <p class="lead text-center text-success">
-                <strong>Local:</strong> {{ $atividade->local }} | {{ $evento->local }}
-            </p>
-
-            <img src=" {{ asset('caminho/para/sua/logo.png') }}" alt="Logo do Sistema" class="img-fluid mx-auto d-block">
-
-            <p class="lead text-center text-success">
-                <strong>Participante:</strong> {{ $inscricao->nome }}
-            </p>
-            <p class="lead text-center text-success">
-                <strong>Atividade:</strong> {{ $atividade->nome }}
-            </p>
-            <p class="lead text-center text-success">
-                <strong><i class="bi bi-calendar-day"></i> Data:</strong> {{ $atividade->horario_inicio }}
-            </p>
-            <p class="lead text-center text-success">
-                <strong>Local:</strong> {{ $evento->local }} | {{ $atividade->local2 }}
-            </p>
-            <img src=" {{ $image }}" alt="QR Code" class="img-fluid mx-auto d-block">
-
-            <div class="text-center">
-                <a href="#" class="btn btn-primary btn-lg">
-                    <i class="bi bi-link"></i> Acessar informações
-                </a>
+            <div class="header">
+                <p>Sua inscrição foi confirmada!</p>
+                <br>
+                <p>Evento: <strong>{{ $evento->nome }} - {{ $atividade->nome }}</strong></p>
+                <p>Data: <strong>{{ $atividade->horario_inicio }}</strong></p>
+                <p>Horário: <strong>{{ $atividade->horario_inicio }}h</strong> | <strong>{{ $atividade->horario_inicio }}h</strong></p>
+                <p>Local: <strong>{{ $atividade->local }} | {{ $evento->local }}</strong></p>
             </div>
-        </div>
+
+            <div class="container-card">
+                <div class="card">
+                    <div class="card-header">
+                        <!-- Adicionar aqui a imagme do Sieven centralizada no card -->
+                        <img src="https://res.cloudinary.com/dzgahmu0x/image/upload/v1699623778/ehhu8ogwapqqeiqigqql.png" alt="">
+                        <h3>Seu Ingresso !</h3>
+                    </div>
+                    <div class="card-info">
+                        <hr>
+                        <p><strong>Participante: </strong>{{ $inscricao->nome }}</p>
+                        <hr>
+                        <p><strong>Atividade: </strong>{{ $atividade->horario_inicio }}</p>
+                        <hr>
+                        <p><strong>Horário: </strong>{{ $atividade->horario_inicio }}h</p>
+                        <hr>
+                        <p><strong>Local: </strong>{{ $atividade->local }} | {{ $evento->local }}</p>
+                        <hr>
+                        <!-- QR Code inserido aqui -->
+                        <div class="qr-code">
+                            <img style="" src="{{ $image }}" alt="QR-Code">
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
-
-    <style>
-        body {
-            font-family: sans-serif;
-            font-size: 16px;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 10px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 0;
-            border-radius: 5px;
-        }
-
-        .content {
-            padding: 20px 0;
-        }
-
-        .img-fluid {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .text-primary {
-            color: #007bff;
-        }
-
-        .text-success {
-            color: #28a745;
-        }
-
-        .img-fluid:hover {
-            box-shadow: 0 0 10px 0 #007bff;
-        }
-    </style>
 </body>
 </html>
+
+<style>
+    .container-card {
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .card-info {
+        text-align: left;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 63px;
+        margin-top: 10px;
+        display: block;
+        align-items: center;
+    }
+
+    .card {
+        border-radius: 5px;
+        border: 1px solid #FFF;
+        background: #FFF;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        max-width: 100%;
+        /* margin: 5rem */
+    }
+
+    .card-header {
+        text-align: center;
+        display: block;
+        justify-content: center;
+    }
+
+    .card-info p {
+        margin-top: 28px;
+        margin-bottom: 28px;
+        color: #404040;
+        font-family: Roboto Condensed;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .card-header h3 {
+        margin-bottom: 32px;
+        color: #50525F;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .header p {
+        color: #000;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 30%; /* 30.936px */
+        letter-spacing: 0.193px;
+    }
+
+    hr{
+        opacity: 0.2;
+    }
+
+    .card-header img {
+        width: 20%;
+        height: 20%;
+    }
+
+    .qr-code {
+        display: flex;
+        justify-content: center;
+        margin-top: 33px;
+        margin-bottom: 33px;
+    }
+
+    .qr-code img{
+        height: 300px;
+        width: 300px;
+    }
+</style>

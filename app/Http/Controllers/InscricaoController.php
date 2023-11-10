@@ -14,6 +14,7 @@ use chillerlan\Authenticator\{Authenticator, AuthenticatorOptionsTrait};
 use chillerlan\Authenticator\Authenticators\AuthenticatorInterface;
 use chillerlan\Settings\SettingsContainerAbstract;
 use chillerlan\QRCode\{QRCode, QROptionsTrait};
+use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Data\QRMatrix;
 use Illuminate\Support\Facades\Storage;
 use Cloudinary\Api\Upload\UploadApi;
@@ -59,7 +60,12 @@ class InscricaoController extends Controller
 
         //Gera o QR Code baseado em uma URL que contém o uuid da inscrição
         $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
-        $qrCodeValue = (new QRCode)->render($qrCode);
+
+        //Seta o background para a cor branca para evitar problemas com dark-mode
+        $options = new QROptions([
+            'imageTransparent'    => false
+        ]);
+        $qrCodeValue = (new QRCode($options))->render($qrCode);
 
         //Envia a mensagem para o Cloudnary
         $imageLink = (new UploadApi())->upload($qrCodeValue)->getArrayCopy();
