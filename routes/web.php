@@ -24,13 +24,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/migrate', function () {
-    \Artisan::call('migrate');
-    \Artisan::call('db:seed');
-    return \Artisan::output();
-});
-
-
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
