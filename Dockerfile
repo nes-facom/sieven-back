@@ -7,6 +7,10 @@ FROM php:8.2-apache as production
 ENV APP_ENV=production
 ENV APP_DEBUG=false
 
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
 RUN apt-get update && apt-get install -y libpq-dev git && \
     docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-install pdo pdo_pgsql
@@ -16,6 +20,8 @@ COPY .env.example /var/www/html/.env
 
 RUN php artisan config:cache && \
     php artisan route:cache && \
+    php artisan migrate && \
+    php aritsan db:seed && \
     chmod 777 -R /var/www/html/storage/ && \
     chown -R www-data:www-data /var/www/ && \
     a2enmod rewrite
