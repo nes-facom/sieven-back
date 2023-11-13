@@ -10,7 +10,7 @@ services:
         ports:
             - 8080:80
         volumes:
-            - .:/var/www/html
+            - .:/var/www/html/public
         env_file:
             - .env
         networks:
