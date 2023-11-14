@@ -81,6 +81,8 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::delete('/atividade/{id}', [AtividadeController::class, 'destroy']);
     //Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
     Route::get('/atividade/{id}', [AtividadeController::class, 'showByEventId']);
+    //Lista todas as atividades
+    Route::get('/atividade', [AtividadeController::class, 'index']);
 
    
 
