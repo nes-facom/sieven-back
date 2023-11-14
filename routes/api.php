@@ -8,7 +8,8 @@ use App\Http\Controllers\TipoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ModalidadeController;
 use App\Http\Controllers\AdministradorController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InscricaoController;
+use Database\Seeders\CategoriaSeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::group(['middleware' => 'cors'], function() {
     //Popula Pagina inicial
     Route::get('/eventos-pagina-inicial', [EventoController::class, 'eventosPaginaInicial']);
     //Popula 
+     //Rotas de inscrição
+     Route::post('/inscricao/criar-inscricao', [InscricaoController::class, 'store']);
 });
 
 //Rotas para manipulação do token e login "/api/auth"
@@ -76,6 +79,11 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::put('/atividade/{id}', [AtividadeController::class, 'update']);
     //Deleta uma atividade
     Route::delete('/atividade/{id}', [AtividadeController::class, 'destroy']);
+    //Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    Route::get('/atividade/{id}', [AtividadeController::class, 'showByEventId']);
+
+   
+
 
 });
     
