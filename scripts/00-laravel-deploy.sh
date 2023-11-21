@@ -12,5 +12,9 @@ php artisan config:cache
 echo "Caching routes..."
 php artisan route:cache
 
+
+echo "Generating token..."
+php artisan jwt:secret
+
 # echo "Running migrations..."
 # php artisan migrate --seed --force
