@@ -6,6 +6,7 @@ FROM php:8.2-apache as production
 
 ENV APP_ENV=production
 ENV APP_DEBUG=false
+ENV RUN_SCRIPTS 1
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

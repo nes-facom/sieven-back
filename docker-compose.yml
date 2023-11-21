@@ -36,7 +36,6 @@ services:
             - sieven-network
         depends_on:
             - pgsql
-        entrypoint: sh -c "sleep 10 && php artisan migrate --seed --force && apache2-foreground"
 
     pgsql:
         image: postgres:9.6
