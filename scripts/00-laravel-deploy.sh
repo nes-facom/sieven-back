@@ -3,8 +3,8 @@
 #composer install --no-interaction --no-progress --optimize-autoloader
 #composer update
 #
-#echo "Generating Key..."
-#php artisan key:generate --show
+echo "Generating Key..."
+php artisan key:generate --show
 #
 #echo "Clearing caches..."
 #php artisan optimize:clear
