@@ -16,43 +16,8 @@ class AtividadeController extends Controller
 
     public function store(Request $request)
     {
-        
         $atividade = new Atividade;
-        
         $atividade->fill($request->all());
-        
-        $validacao_data_atividade = $this->validate_data_atividade($atividade);
-
-        if ($validacao_data_atividade->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $validacao_data_atividade->getData()->message],
-                $validacao_data_atividade->getStatusCode()
-            );
-        }
-
-        $validacao_data_registro = $this->validate_data_registro($atividade);
-
-        if ($validacao_data_registro->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $validacao_data_registro->getData()->message],
-                $validacao_data_registro->getStatusCode()
-            );
-        }
-
-        $validacao_numero_vagas = $this->validate_numero_vagas($atividade);
-
-        if ($validacao_numero_vagas->getStatusCode() != 200) 
-        {
-            return response()->json(
-                ['message' => $validacao_numero_vagas->getData()->message],
-                $validacao_numero_vagas->getStatusCode()
-            );
-        }
-
-       
-
         $atividade->save();
 
         return response()->json(['message' => 'Sucesso!', 'content' => $atividade]);

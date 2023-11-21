@@ -1,5 +1,5 @@
-INSERT INTO users (name, email, email_verified_at, password, remember_token, created_at, updated_at, cpf, data_nascimento, foto_perfil, membro_ufms, administrador, situacao_id) 
-VALUES ('sieven', 'admin@admin', NULL, '$2y$10$Wj.rMPlJ8zdu6OChS1nasexv/RRl/zyre7toxOXyLV.Ry/DbxEtii', NULL, '2023-05-08 18:51:34', '2023-05-08 18:51:34', NULL, NULL, NULL, TRUE, TRUE, 1);
+-- INSERT INTO users (name, email, email_verified_at, password, remember_token, created_at, updated_at, cpf, data_nascimento, foto_perfil, membro_ufms, administrador, situacao_id) 
+-- VALUES ('sieven', 'admin@admin', NULL, '$2y$10$Wj.rMPlJ8zdu6OChS1nasexv/RRl/zyre7toxOXyLV.Ry/DbxEtii', NULL, '2023-05-08 18:51:34', '2023-05-08 18:51:34', NULL, NULL, NULL, TRUE, TRUE, 1);
 
 INSERT INTO public.evento (nome, descricao, "local", data_inicial, data_final, created_at, updated_at, created_by_user, edited_by_cargo, situacao_id) VALUES ('Evento 1', 'Descrição do Evento 1', 'local 1', '2023-05-10 08:00:00', '2023-05-14 20:00:00', now(), now(), 1, 1, 1);
 INSERT INTO public.evento (nome, descricao, "local", data_inicial, data_final, created_at, updated_at, created_by_user, edited_by_cargo, situacao_id) VALUES ('Evento 2', 'Descrição do Evento 2', 'local 2', '2023-05-15 10:00:00', '2023-05-17 22:00:00', now(), now(), 1, 1, 1);
