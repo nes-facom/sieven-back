@@ -59,7 +59,7 @@ class InscricaoController extends Controller
         $evento = Evento::find($atividade['evento_id']);
 
         //Gera o QR Code baseado em uma URL que contém o uuid da inscrição
-        $qrCode = 'http://localhost:8080/#/' . $inscricao->uuid->toString();
+        $qrCode = '/inscricao' . '/'. $inscricao->uuid->toString();
 
         //Seta o background para a cor branca para evitar problemas com dark-mode
         $options = new QROptions([
@@ -76,6 +76,26 @@ class InscricaoController extends Controller
         return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
     }
 
+    public function update($uuid)
+    {
+        // Encontrar a inscrição com base no UUID
+        $inscricao = Inscricao::where('uuid', $uuid)->first();
+
+        if (!$inscricao) {
+            return response()->json(['mensagem' => 'Inscrição não encontrada', 'status' => 404], 404);
+        }
+
+        // Verificar se a inscrição já fez check-in
+        if ($inscricao->checkin) {
+            return response()->json(['mensagem' => 'Esta inscrição já fez check-in', 'status' => 400], 400);
+        }
+
+        // Alterar o atributo checkin para true
+        $inscricao->update(['checkin' => true]);
+
+        return response()->json(['mensagem' => 'Check-in realizado com sucesso'], 200);
+    }
+
     public function show($id)
     {
         // Lógica para mostrar um recurso específico
@@ -86,10 +106,10 @@ class InscricaoController extends Controller
         // Lógica para exibir o formulário de edição
     }
 
-    public function update(Request $request, $id)
-    {
-        // Lógica para atualizar um recurso no banco de dados
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     // Lógica para atualizar um recurso no banco de dados
+    // }
 
     public function destroy($id)
     {

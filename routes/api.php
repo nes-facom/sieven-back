@@ -84,6 +84,8 @@ Route::middleware(['jwt.auth'])->group(function () {
     //Lista todas as atividades
     Route::get('/atividade', [AtividadeController::class, 'index']);
 
+    Route::put('/inscricao/{uuid}', [InscricaoController::class, 'update']);
+
    
 
 
