@@ -145,7 +145,8 @@ class AtividadeController extends Controller
         }
 
         // Buscar as inscrições relacionadas a essa atividade
-        $inscricoes = Inscricao::where('atividade_id', $id)->get();
+        $inscricoes = Inscricao::where('atividade_id', $id)
+                                ->where('checkin', true)->get();
 
         if ($inscricoes->isEmpty()) {
             return response()->json(['message' => 'Nenhuma inscrição encontrada para esta atividade.'], 404);
