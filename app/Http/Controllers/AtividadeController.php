@@ -145,11 +145,23 @@ class AtividadeController extends Controller
         }
 
         // Buscar as inscrições relacionadas a essa atividade
-        $inscricoes = Inscricao::where('atividade_id', $id)
-                                ->where('checkin', true)->get();
+        $inscricoes = \DB::table('inscricaos')
+        ->where('atividade_id', $id)
+        ->where('checkin', true)->get();
 
         if ($inscricoes->isEmpty()) {
             return response()->json(['message' => 'Nenhuma inscrição encontrada para esta atividade.'], 404);
+        }
+
+        $caminhoPasta = storage_path('app/csv');
+
+        // Verifica se a pasta já existe
+        if (!file_exists($caminhoPasta)) {
+            // Cria a pasta se não existir
+            mkdir($caminhoPasta, 0755, true);
+            return "Pasta 'csv' criada com sucesso!";
+        } else {
+            return "A pasta 'csv' já existe.";
         }
 
         // Gerar o arquivo CSV
