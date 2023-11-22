@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Atividade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use App\Models\Inscricao;
+use League\Csv\Writer;
+use League\Csv\CharsetConverter;
+use Illuminate\Support\Facades\Log;
+
 
 class AtividadeController extends Controller
 {
@@ -125,6 +131,43 @@ class AtividadeController extends Controller
         }
 
         return response()->json(['message' => 'Sucesso!'], 200);
+    }
+   
+    public function gerarRelatorio($id)
+    {
+        Log::info('Gerando relatório para atividade ID: ' . $id);
+        // Buscar a atividade pelo ID
+        $atividade = Atividade::find($id);
+
+        if (!$atividade) {
+            Log::error('Atividade não encontrada para gerar relatório.');
+            return response()->json(['error' => 'Atividade não encontrada.'], 404);
+        }
+
+        // Buscar as inscrições relacionadas a essa atividade
+        $inscricoes = Inscricao::where('atividade_id', $id)->get();
+
+        if ($inscricoes->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma inscrição encontrada para esta atividade.'], 404);
+        }
+
+        // Gerar o arquivo CSV
+        $csvFileName = 'relatorio_atividade_' . $atividade->id . '.csv';
+        $csvPath = storage_path('app/csv/' . $csvFileName);
+
+        $csv = Writer::createFromPath($csvPath, 'w+');
+        CharsetConverter::addTo($csv, 'UTF-8', 'ISO-8859-1');
+
+        // Adicionar cabeçalhos ao CSV
+        $csv->insertOne(['ID', 'Nome', 'Email', 'CPF', 'Check-in']);
+
+        // Adicionar dados ao CSV
+        foreach ($inscricoes as $inscricao) {
+            $csv->insertOne([$inscricao->id, $inscricao->nome, $inscricao->email, $inscricao->cpf, $inscricao->checkin ? 'Presente' : 'Ausente']);
+        }
+         Log::info('Resposta da geração de relatório:', ['csv_path' => $csvPath]);
+        // Retornar o caminho do arquivo CSV gerado
+        return Response::download($csvPath, $csvFileName);
     }
 
     

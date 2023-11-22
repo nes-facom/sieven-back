@@ -86,6 +86,8 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     Route::put('/inscricao/{uuid}', [InscricaoController::class, 'update']);
 
+    //Emite o relatorio
+    Route::get('/atividade/{id}/gerar-relatorio', [AtividadeController::class, 'gerarRelatorio']);
    
 
 
