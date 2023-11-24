@@ -40,7 +40,7 @@ Route::group(['middleware' => 'cors'], function() {
     //Mostra todas as atividades de um evento
     Route::get('/evento/{id}/detalhes', [AtividadeController::class, 'showbyEventId']);
     //Mostra uma atividade
-    Route::get('/atividade/{id}', [AtividadeController::class, 'show']);
+    Route::get('/atividade/{id}/checkin', [AtividadeController::class, 'show']);
     //Popula Pagina inicial
     Route::get('/eventos-pagina-inicial', [EventoController::class, 'eventosPaginaInicial']);
     //Popula 

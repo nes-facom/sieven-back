@@ -46,7 +46,7 @@ class InscricaoController extends Controller
         $inscricaoExistente = Inscricao::where('atividade_id', $dados['atividade_id'])
             ->where('cpf', $dados['cpf'])
             ->first();
-
+        echo $inscricaoExistente;
         //Faz a validação das consultas acima
         if ($numeroInscricoesAtuais >= $numeroMaximoInscricoes) {
             return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade', 'status' => 400], 400);
