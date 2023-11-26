@@ -46,12 +46,12 @@ class InscricaoController extends Controller
         $inscricaoExistente = Inscricao::where('atividade_id', $dados['atividade_id'])
             ->where('cpf', $dados['cpf'])
             ->first();
-
+        echo $inscricaoExistente;
         //Faz a validação das consultas acima
         if ($numeroInscricoesAtuais >= $numeroMaximoInscricoes) {
-            return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade'], 400);
+            return response()->json(['mensagem' => 'Número máximo de inscrições atingido para esta atividade', 'status' => 400], 400);
         } else if ($inscricaoExistente) {
-            return response()->json(['mensagem' => 'Já existe uma inscrição para esta atividade com o mesmo CPF'], 401);
+            return response()->json(['mensagem' => 'Já existe uma inscrição para esta atividade com o mesmo CPF', 'status' => 402], 402);
         }
 
         //Cria a inscrição no banco
@@ -73,7 +73,7 @@ class InscricaoController extends Controller
         //Envia o e-mail
         Mail::to($inscricao->email)->send(new InscricaoCriada($inscricao, $imageLink['secure_url'], $evento, $atividade));
 
-        return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'inscricao' => $inscricao], 200);
+        return response()->json(['mensagem' => 'Inscrição criada com sucesso', 'status' => 200, 'inscricao' => $inscricao], 200);
     }
 
     public function update($uuid)

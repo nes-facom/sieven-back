@@ -159,9 +159,6 @@ class AtividadeController extends Controller
         if (!file_exists($caminhoPasta)) {
             // Cria a pasta se não existir
             mkdir($caminhoPasta, 0755, true);
-            return "Pasta 'csv' criada com sucesso!";
-        } else {
-            return "A pasta 'csv' já existe.";
         }
 
         // Gerar o arquivo CSV
