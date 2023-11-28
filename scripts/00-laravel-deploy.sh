@@ -18,3 +18,6 @@ php artisan jwt:secret
 
 # echo "Running migrations..."
 # php artisan migrate --seed --force
+
+# Limpar o cache uma vez
+php artisan cache:clear
