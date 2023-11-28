@@ -3,25 +3,34 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 
-class corsMiddleware
+class CorsMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @param  \Closure  $next
+     * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
+        $headers = [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With, Application, ip',
+        ];
+
+        if ($request->isMethod('OPTIONS')) {
+            return response()->json('OK', 200, $headers);
+        }
+
         $response = $next($request);
-        $response->headers->set('Access-Control-Allow-Origin' , '*');
-        $response->headers->set('Access-Control-Allow-Origin' , 'https://sieven-frontend.onrender.com');
-        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application','ip');
-        
+
+        foreach ($headers as $key => $value) {
+            $response->header($key, $value);
+        }
+
         return $response;
     }
 }
