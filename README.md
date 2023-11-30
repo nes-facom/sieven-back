@@ -114,7 +114,7 @@ php artisan jwt:secret
 
 Inicie o servidor de desenvolvimento do Laravel na porta 8000: 
 ```
-php aritsan serve --port 8000
+php artisan serve --port 8000
 ```
  
 Acesse a aplicação no navegador: `http://127.0.0.1:8000`.
