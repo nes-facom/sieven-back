@@ -20,20 +20,40 @@ Este repositório contém uma aplicação Laravel para o back-end do projeto SIE
 ### CRUD de Eventos e Atividades
 ### Eventos
 
-- **GET /eventos**: Retorna uma lista de eventos existentes.
-- **GET /eventos/{id}**: Retorna os detalhes de um evento específico com o ID correspondente.
-- **POST /eventos**: Cria um novo evento com base nos dados fornecidos.
-- **PUT /eventos/{id}**: Atualiza um evento existente com o ID correspondente, utilizando os dados fornecidos.
-- **DELETE /eventos/{id}**: Exclui um evento existente com o ID correspondente.
+- **GET /evento**: Retorna uma lista de eventos existentes.
+- **GET /evento/{id}**: Retorna os detalhes de um evento específico com o ID correspondente.
+- **GET /evento/{id}/detalhes**: Mostra todas as atividades de um evento.
+- **GET /eventos-pagina-inicial**: Popula a pagina inicial
+- **POST /evento/criar-evento**: Cria um novo evento com base nos dados fornecidos.
+- **PUT /evento/{id}**: Atualiza um evento existente com o ID correspondente, utilizando os dados fornecidos.
+- **DELETE /evento/{id}**: Exclui um evento existente com o ID correspondente.
 
 ### Atividades
 
-- **GET /atividades**: Retorna uma lista de atividades existentes.
-- **GET /atividades/{id}**: Retorna os detalhes de uma atividade específica com o ID correspondente.
-- **GET /atividades/evento/{eventoId}**: Retorna uma lista de atividades para um evento específico com o ID correspondente.
-- **POST /atividades**: Cria uma nova atividade com base nos dados fornecidos.
-- **PUT /atividades/{id}**: Atualiza uma atividade existente com o ID correspondente, utilizando os dados fornecidos.
-- **DELETE /atividades/{id}**: Exclui uma atividade existente com o ID correspondente.
+- **GET /atividade**: Retorna uma lista de atividades existentes.
+- **GET /atividade/{id}**: Retorna os detalhes de uma atividade específica com o ID correspondente.
+- **GET /atividade/{id}/checkin**: Mostra a atividade que vai ser realizado o check-in.
+- **GET /atividade/{id}/gerar-relatorio** : Gera um relatorio com todas as inscricaos que tem o checkin true de uma atividade especifica.
+- **POST /atividade/criar-atividade**: Cria uma nova atividade com base nos dados fornecidos.
+- **PUT /atividade/{id}**: Atualiza uma atividade existente com o ID correspondente, utilizando os dados fornecidos.
+- **DELETE /atividade/{id}**: Exclui uma atividade existente com o ID correspondente.
+
+## Inscrição
+
+- **PUT /inscricao/{uuid}** : Cria uma inscricao com ID unico
+
+## Tipo
+
+- **GET /tipo**: Mostra todos os tipos.
+
+## Categoria
+
+- **GET /categoria**: Mostra todas as categorias.
+
+## Modalidade
+
+- **GET /modalidade**: Mostra todas as modalidades.
+
 
 ## Requisitos
  Requisitos mínimos necessários para executar a aplicação
@@ -48,13 +68,56 @@ Este repositório contém uma aplicação Laravel para o back-end do projeto SIE
 - Postgres
 
 ## Instalação-local
-1. Clone este repositório: `git clone https://github.com/seu-usuario/seu-projeto.git`.
-2. Instale as dependências do PHP com o Composer: `composer install`.
-3. Copie o arquivo de ambiente `.env.example` para `.env` e configure as variáveis de ambiente, como a conexão com o banco de dados.
-4. Gere uma chave de aplicação: `php artisan key:generate`.
-5. Execute as migrações do banco de dados: `php artisan migrate`.
-6. Inicie o servidor de desenvolvimento do Laravel: `php artisan serve`.
-7. Acesse a aplicação no navegador: `http://127.0.0.1:80`.
+
+Clone este repositório
+```
+git clone https://github.com/seu-usuario/seu-projeto.git`.
+```
+Instale as dependências do PHP com o Composer
+```
+ composer install
+```
+Copie o arquivo de ambiente e configure as variáveis de ambiente, como o DB_HOST E DB_PASSWORD
+ 
+```
+cp .env.example .env
+```
+Descomente no php.ini a `extension=pgsql` e `extension=gd`
+
+Substitua a parte de MAIL que contem no .env pelo seguinte trecho:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_ENCRYPTION=tls
+MAIL_USERNAME=sieven.nes@gmail.com
+MAIL_PASSWORD='rmes onbh zkxf tcfg'
+MAIL_FROM_ADDRESS=sieven.nes@gmail.com
+CLOUDINARY_URL=cloudinary://628234936799186:bU1zgiBvRo17LO_ULdzoLw5aW5E@dzgahmu0x
+```
+Crie um database no PostgresSQL com o nome `sieven` e realize as migrations:
+
+```
+php artisan migrate:fresh --seed
+```
+Gere uma chave de aplicação:
+
+ ```
+php artisan key:generate
+```
+Gera um secret para o JWT:
+
+```
+php artisan jwt:secret
+```
+
+Inicie o servidor de desenvolvimento do Laravel na porta 8000: 
+```
+php aritsan serve --port 8000
+```
+ 
+Acesse a aplicação no navegador: `http://127.0.0.1:8000`.
 
 
 ## Instalação-docker
@@ -97,13 +160,19 @@ Execute o comando `php artisan migrate` no serviço `app`. O comando `php artisa
 
 
 ## Primeiros passos
-Após a execução da aplicação, é necessário cadastrar um um usuário através da rota `http://127.0.0.1/register` para ter acesso ao dashboard
+Após a execução da aplicação, o login do administrador é:
+```
+login: admin@mail.com
+senha: admin
+```
 
 ## Autores 
 Esta parte do sistema foi desenvolvido pela seguinte equipe:
-- [David Gama](https://github.com/davidgamaserrate1) (david.gama@ufms.br)
-- [Henrique Yule](https://github.com/HenriqueYuleZ) (henrique.y@ufms.br)
-- [Pedro Arantes](https://github.com/pedrorodriguesarantes) (pedro.arantes@ufms.br)
+
+- [Joao Brigido](https://github.com/jvbrigido2) (joao_brigido@ufms.br)
+- [Bruno Lewin](https://github.com/AgenteVIIX) (brunno.lewin@ufms.br)
+- [Larissa Leal](https://github.com/larisleal) (larissa.leal@ufms.br)
+- [Arthur Cabral](https://github.com/arthcabral) (arthur.cabral@ufms.br)
   
 
  
